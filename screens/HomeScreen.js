@@ -1,9 +1,10 @@
 import * as ExpoPixi from 'expo-pixi';
 import React, { Component } from 'react';
-import { AppState, Button, StyleSheet, Text, View } from 'react-native';
+import { Button, StyleSheet, Text, View } from 'react-native';
+import { v4 as uuidv4 } from 'uuid';
 import { AppContext } from '../context/appContext';
 
-class HomeScreenClass extends Component {
+export default class HomeScreen extends Component {
   static contextType = AppContext;
   constructor(props){
     super(props);
@@ -12,34 +13,37 @@ class HomeScreenClass extends Component {
       strokeColor: Math.random() * 0xffffff,
       strokeWidth: Math.random() * 30 + 10,
       lines: [],
-      appState: AppState.currentState,
+      // appState: AppState.currentState,
     };
   }
 
 
-  handleAppStateChangeAsync = nextAppState => {
-    if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
-      if (this.sketch) {
-        this.setState({ appState: nextAppState, id: uuidv4(), lines: this.sketch.lines });
-        return;
-      }
-    }
-    this.setState({ appState: nextAppState });
-  };
+  // handleAppStateChangeAsync = nextAppState => {
+  //   if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
+  //     if (this.sketch) {
+  //       this.setState({ appState: nextAppState, id: uuidv4(), lines: this.sketch.lines });
+  //       return;
+  //     }
+  //   }
+  //   this.setState({ appState: nextAppState });
+  // };
 
-  componentDidMount() {
-    AppState.addEventListener('change', this.handleAppStateChangeAsync);
-  }
+  // componentDidMount() {
+  //   AppState.addEventListener('change', this.handleAppStateChangeAsync);
+  // }
 
-  componentWillUnmount() {
-    AppState.removeEventListener('change', this.handleAppStateChangeAsync);
-  }
+  // componentWillUnmount() {
+  //   AppState.removeEventListener('change', this.handleAppStateChangeAsync);
+  // }
 
   onChangeAsync = async () => {
-    const {uri} = await this.sketch.takeSnapshotAsync();
+    const image = {
+      id: uuidv4(),
+      image: await this.sketch.takeSnapshotAsync()
+    }
 
     this.setState({
-      currentImage:  {uri},
+      currentImage:  image,
       strokeWidth: Math.random() * 30 + 10,
       strokeColor: Math.random() * 0xffffff,
     });
@@ -57,12 +61,7 @@ class HomeScreenClass extends Component {
   }
 
   saveImage = () => {
-    // console.log('gallery',this.context);
-    // console.log('current',this.state.currentImage);
-    // this.context.setGallery([]);
     this.context.setGallery([...this.context.gallery, this.state.currentImage]);
-    console.log('gallery',this.context.gallery);
-    // this.props.getImages(this.state.images);
     this.clear();
   }
 
@@ -79,7 +78,7 @@ class HomeScreenClass extends Component {
               strokeAlpha={1}
               onChange={this.onChangeAsync}
               onReady={this.onReady}
-              initialLines={this.state.lines}
+              // initialLines={this.state.lines}
             />
             <View style={styles.label}>
               <Text>Canvas - draw here</Text>
@@ -139,13 +138,13 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function HomeScreen(){
-  return(
-    <View style={styles.container}>
-      <HomeScreenClass/>
-    </View>
-  )
-}
+// export default function HomeScreen(){
+//   return(
+//     <View style={styles.container}>
+//       <HomeScreenClass/>
+//     </View>
+//   )
+// }
 
 HomeScreen.navigationOptions = {
   header: null,
