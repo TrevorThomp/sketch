@@ -1,12 +1,14 @@
 import * as ExpoPixi from 'expo-pixi';
 import React, { Component } from 'react';
 import { AppState, Button, StyleSheet, Text, View } from 'react-native';
+import { AppContext } from '../context/appContext';
 
-export default class HomeScreen extends Component {
+class HomeScreenClass extends Component {
+  static contextType = AppContext;
   constructor(props){
     super(props);
     this.state = {
-      images: [],
+      currentImage: null,
       strokeColor: Math.random() * 0xffffff,
       strokeWidth: Math.random() * 30 + 10,
       lines: [],
@@ -34,10 +36,10 @@ export default class HomeScreen extends Component {
   }
 
   onChangeAsync = async () => {
-    const uri = await this.sketch.takeSnapshotAsync();
+    const {uri} = await this.sketch.takeSnapshotAsync();
 
     this.setState({
-      images: [...this.state.images, uri],
+      currentImage:  {uri},
       strokeWidth: Math.random() * 30 + 10,
       strokeColor: Math.random() * 0xffffff,
     });
@@ -55,7 +57,12 @@ export default class HomeScreen extends Component {
   }
 
   saveImage = () => {
-    console.log(this.state.images);
+    // console.log('gallery',this.context);
+    // console.log('current',this.state.currentImage);
+    // this.context.setGallery([]);
+    this.context.setGallery([...this.context.gallery, this.state.currentImage]);
+    console.log('gallery',this.context.gallery);
+    // this.props.getImages(this.state.images);
     this.clear();
   }
 
@@ -81,10 +88,10 @@ export default class HomeScreen extends Component {
         </View>
         <Button
           color={'blue'}
-          title="undo"
+          title="clear"
           style={styles.button}
           onPress={() => {
-            this.sketch.undo();
+            this.clear();
           }}
         />
         <Button
@@ -106,7 +113,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   sketchContainer: {
-    height: '75%',
+    height: '95%',
   },
   image: {
     flex: 1,
@@ -131,6 +138,14 @@ const styles = StyleSheet.create({
     minHeight: 48,
   },
 });
+
+export default function HomeScreen(){
+  return(
+    <View style={styles.container}>
+      <HomeScreenClass/>
+    </View>
+  )
+}
 
 HomeScreen.navigationOptions = {
   header: null,
