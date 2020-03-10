@@ -44,7 +44,7 @@ export default class HomeScreen extends Component {
   };
 
   onReady = () => {
-    console.log('ready!');
+    console.log('ready! hi');
   };
 
   clear = () => {
