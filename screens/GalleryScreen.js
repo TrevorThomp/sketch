@@ -1,18 +1,32 @@
 import * as React from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { FlatList, Image, StyleSheet, Text, View } from 'react-native';
 import { AppContext } from '../context/appContext';
 
 export default function Gallery() {
   const appContext = React.useContext(AppContext);
-  console.log('gallery',appContext.gallery[0]);
-  let gallery = appContext.gallery[0].uri;
-  console.log('gal[0]' ,gallery)
+  let gallery = appContext.gallery;
+
+  console.log('gallery', gallery[0].image.localUri);
+
   return (
       <View>
-        <Text>Hello</Text>
-        <Image
-          style={{width: 50, height: 100}}
-          source={{uri: gallery}}
+          <Image
+          style={{width: 100, height: 200}}
+          source={{uri: gallery[0].image.localUri}}
+          />
+
+        {/* <Text>Hello</Text> */}
+        <FlatList
+          style={styles.flatlist}
+          data={appContext.gallery}
+          renderItem={({item}) => {
+            console.log('image', item.image.localUri);
+              return (
+              <Image style={styles.images} source={{uri: item.image.localUri}}/>
+              )
+          }}
+          keyExtractor={item => item.id}
+          ListEmptyComponent={<Text>Nothing to Display</Text>}
           />
       </View>
 
@@ -20,30 +34,15 @@ export default function Gallery() {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  flatlist: {
     flex: 1,
-    backgroundColor: '#fafafa',
+    borderColor: 'red',
+    borderWidth: 1,
   },
-  contentContainer: {
-    paddingTop: 15,
-  },
-  optionIconContainer: {
-    marginRight: 12,
-  },
-  option: {
-    backgroundColor: '#fdfdfd',
-    paddingHorizontal: 15,
-    paddingVertical: 15,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderBottomWidth: 0,
-    borderColor: '#ededed',
-  },
-  lastOption: {
-    borderBottomWidth: StyleSheet.hairlineWidth,
-  },
-  optionText: {
-    fontSize: 15,
-    alignSelf: 'flex-start',
-    marginTop: 1,
-  },
+  images: {
+    width: 100, 
+    height: 200, 
+    borderColor: 'green', 
+    borderWidth: 1,
+  }
 });
