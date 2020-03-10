@@ -9,7 +9,6 @@ class HomeScreenClass extends Component {
     super(props);
     this.state = {
       currentImage: null,
-      images: [],
       strokeColor: Math.random() * 0xffffff,
       strokeWidth: Math.random() * 30 + 10,
       lines: [],
@@ -142,7 +141,7 @@ const styles = StyleSheet.create({
 
 export default function HomeScreen(){
   return(
-    <View>
+    <View style={styles.container}>
       <HomeScreenClass/>
     </View>
   )

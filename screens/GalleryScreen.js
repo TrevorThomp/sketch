@@ -1,24 +1,19 @@
 import * as React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Image, StyleSheet, Text, View } from 'react-native';
 import { AppContext } from '../context/appContext';
 
 export default function Gallery() {
   const appContext = React.useContext(AppContext);
-  console.log(appContext.gallery[0]);
+  console.log('gallery',appContext.gallery[0]);
+  let gallery = appContext.gallery[0].uri;
+  console.log('gal[0]' ,gallery)
   return (
-
       <View>
+        <Text>Hello</Text>
         <Image
-          source={{uri: appContext.gallery[0].uri}}
-        />
-        {/* <FlatList
-          data={appContext.gallery}
-          renderItem={(item) => (
-            <Image
-              source={{uri: item.uri}}
-              />
-          )}
-          /> */}
+          style={{width: 50, height: 100}}
+          source={{uri: gallery}}
+          />
       </View>
 
   );
