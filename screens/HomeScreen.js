@@ -1,3 +1,4 @@
+import * as MediaLibrary from 'expo-media-library';
 import * as ExpoPixi from 'expo-pixi';
 import React, { Component } from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
@@ -13,28 +14,12 @@ export default class HomeScreen extends Component {
       strokeColor: Math.random() * 0xffffff,
       strokeWidth: Math.random() * 30 + 10,
       lines: [],
-      // appState: AppState.currentState,
     };
   }
 
-
-  // handleAppStateChangeAsync = nextAppState => {
-  //   if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
-  //     if (this.sketch) {
-  //       this.setState({ appState: nextAppState, id: uuidv4(), lines: this.sketch.lines });
-  //       return;
-  //     }
-  //   }
-  //   this.setState({ appState: nextAppState });
-  // };
-
-  // componentDidMount() {
-  //   AppState.addEventListener('change', this.handleAppStateChangeAsync);
-  // }
-
-  // componentWillUnmount() {
-  //   AppState.removeEventListener('change', this.handleAppStateChangeAsync);
-  // }
+  componentDidMount() {
+    MediaLibrary.requestPermissionsAsync();
+  }
 
   onChangeAsync = async () => {
     const image = {
@@ -60,8 +45,9 @@ export default class HomeScreen extends Component {
     }
   }
 
-  saveImage = () => {
-    this.context.setGallery([...this.context.gallery, this.state.currentImage]);
+  saveImage = async () => {
+    const asset = await MediaLibrary.createAssetAsync(this.state.currentImage.image.localUri);
+    await this.context.setGallery([...this.context.gallery, asset]);
     this.clear();
   }
 
@@ -78,7 +64,6 @@ export default class HomeScreen extends Component {
               strokeAlpha={1}
               onChange={this.onChangeAsync}
               onReady={this.onReady}
-              // initialLines={this.state.lines}
             />
             <View style={styles.label}>
               <Text>Canvas - draw here</Text>
