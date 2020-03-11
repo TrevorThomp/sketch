@@ -1,4 +1,4 @@
-const tintColor = '#2f95dc';
+const tintColor = '#'+(Math.random()*0xFFFFFF<<0).toString(16);
 
 export default {
   tintColor,
