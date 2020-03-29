@@ -1,49 +1,72 @@
-import * as React from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import * as SMS from 'expo-sms';
+import React, { useState } from 'react';
+import { Alert, Button, FlatList, Image, SafeAreaView, StyleSheet, Text, TextInput } from 'react-native';
 import { AppContext } from '../context/appContext';
 
 export default function Gallery() {
+  const [telNumber, setTelNumber] = useState();
   const appContext = React.useContext(AppContext);
-  console.log('gallery',appContext.gallery[0]);
-  let gallery = appContext.gallery[0].uri;
-  console.log('gal[0]' ,gallery)
-  return (
-      <View>
-        <Text>Hello</Text>
-        <Image
-          style={{width: 50, height: 100}}
-          source={{uri: gallery}}
-          />
-      </View>
 
+  const buttonPress = () => {
+    if(!telNumber){
+      Alert.alert('Error!', 'No phone number was entered', [{text: 'OK'}])
+    }
+    SMS.sendSMSAsync(telNumber, 'Have a sketch!')
+  }
+
+  function Item({item}) {
+    return (
+      <SafeAreaView>
+        <Image style={styles.images} source={{uri: item.uri}}/>
+        <Button title='Send Image' onPress={() => buttonPress()}/>
+      </SafeAreaView> 
+    );
+  }
+
+  return (
+      <SafeAreaView style={styles.container}>
+        <Text>Enter a phone number and click an image to send!</Text>
+        <TextInput 
+          style={styles.input}
+          onChangeText={text => setTelNumber(text)}
+          keyboardType='phone-pad'
+          placeholder='555-555-5555'
+          textContentType='telephoneNumber'
+          />
+        <FlatList
+          data={appContext.gallery}
+          renderItem={({item}) => <Item item={item}/>}
+          keyExtractor={item => item.id}  
+          ListEmptyComponent={() => <Text style={styles.emptyMessage}>Nothing to Display</Text>}
+          />
+      </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fafafa',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
-  contentContainer: {
-    paddingTop: 15,
+  images: {
+    width: 300, 
+    height: 250, 
+    borderColor: 'green', 
+    borderWidth: 1,
+    marginTop: 10
   },
-  optionIconContainer: {
-    marginRight: 12,
+  emptyMessage: {
+    marginTop: 100,
+    textAlignVertical: "center",
   },
-  option: {
-    backgroundColor: '#fdfdfd',
-    paddingHorizontal: 15,
-    paddingVertical: 15,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderBottomWidth: 0,
-    borderColor: '#ededed',
-  },
-  lastOption: {
-    borderBottomWidth: StyleSheet.hairlineWidth,
-  },
-  optionText: {
-    fontSize: 15,
-    alignSelf: 'flex-start',
-    marginTop: 1,
-  },
+  input: {
+    height: 50,
+    width: 150,
+    borderWidth: 1,
+    backgroundColor: 'white',
+    marginTop: 25,
+    marginBottom: 25,
+    textAlign: 'center',
+  }
 });

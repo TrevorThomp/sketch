@@ -3081,6 +3081,11 @@ expo-location@~8.0.0:
   dependencies:
     invariant "^2.2.4"
 
+expo-media-library@~8.0.0:
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/expo-media-library/-/expo-media-library-8.0.0.tgz#d763a2f39a81348d357171be5ea486679c2edb86"
+  integrity sha512-7TIcJjmQq+sH3deIVjwyQYa3nVsLZZUj6fQYA3R+DrFNRT6ehmd1Lai0klTa7ma3pflPEC4Uv2zOyf53alvD2w==
+
 expo-permissions@~8.0.0:
   version "8.0.0"
   resolved "https://registry.yarnpkg.com/expo-permissions/-/expo-permissions-8.0.0.tgz#5a45e8451dd7ff37c9e6ce5e2447818372547813"
@@ -3099,6 +3104,16 @@ expo-pixi@^1.2.0:
     pixi-spine "^1.5.11"
     pixi.js "^4.7.0"
     url "^0.11.0"
+
+expo-sharing@~8.0.0:
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/expo-sharing/-/expo-sharing-8.0.0.tgz#71195e6a24d6e36839e80d15581017d9cf02099c"
+  integrity sha512-pucK9IaO7ZgKumUlQtmiKENP1zfZeh6TDyWF9Nlt37GJDBl+j9pPW+fS6dYfhF7UoPGEjactpYCtozoMu2fF2A==
+
+expo-sms@~8.0.0:
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/expo-sms/-/expo-sms-8.0.0.tgz#25131df03b0258663d1b36967fc31ad24f660eb6"
+  integrity sha512-yoRlETB+AKg71tyriQXZdTXEFs326xFg3KMSl+3ZhHs8MWtuXd2/A9WlbY2/9I2aCmxGr4EfPzgYsP3nOmtRTg==
 
 expo-sqlite@~8.0.0:
   version "8.0.0"
