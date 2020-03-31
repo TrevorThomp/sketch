@@ -1,20 +1,32 @@
 # sKetch
 
-## Description
-
 sKetch allows the user to draw with the power of their fingertips! The user is also given the ability to save their drawings to refer to later or refer it to a friend via SMS.
 
-### Collaborators: Travis Skyles & Trevor Thompson
+|  Dashboard |Gallery|
+|---------------------|----------------------|
+|![](./assets/screenshots/dashboard.png) | ![](./assets/screenshots/gallery.png) |
 
-### Setup
-* `Clone Repo`
-* `npm install`
-* `npm start`
-  * Scan QR Code on `expo.io` when prompted with Tunnel initiated
-* Begin to draw!
+## Key Features
 
+* Draw pictures with your fingertips
+* Save drawings into personal gallery
+* Send gallery drawings via SMS
+* iOS/Android compatible
 
-#### Core Dependencies 
-* `react-native`
-* `expo`
-* `react-navigation/bottom-tabs`
+## Technologies
+* React version: 16.9.0
+* React-Native
+* React-Navigation version: 5.0.0
+* Expo version: 36.0.0
+
+## Setup
+To run this project, install locally with npm:
+```
+$ cd sketch
+$ npm install
+$ npm start
+  * Run iOS or Andriod Emulator with expo.io
+```
+
+### Collaborators
+Trevor Thompson & Travis Skyles
